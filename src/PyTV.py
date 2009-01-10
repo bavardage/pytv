@@ -7,8 +7,10 @@ import sys
 
 class PyTV(object):
     
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, left_margin=0, right_margin=0):
         self.filename = filename
+        self.left_margin = left_margin
+        self.right_margin = right_margin
         self.init_gui()
         if self.filename:
             self.load_file_into_buffer(self.filename, self.buffer)
@@ -36,6 +38,9 @@ class PyTV(object):
 
     def configure(self):
         self.textView.set_wrap_mode(gtk.WRAP_WORD)
+        print self.left_margin
+        self.textView.set_left_margin(self.left_margin)
+        self.textView.set_right_margin(self.right_margin)
 
     def load_file_into_buffer(self, filename, buffer):
         infile = open(filename, "r")
@@ -57,15 +62,21 @@ def usage():
 
 def main(argv):
     filename = None
+    left_margin = 0
+    right_margin = 0
     try:
-        opts, args = getopt.getopt(argv, "f:", ["filename=",])
+        opts, args = getopt.getopt(argv, "f:l:r:", ["filename=", "left-margin=", "right-margin="])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-f", "--filename"):
             filename = arg
-    pytv = PyTV(filename)
+        elif opt in ("-l", "--left-margin"):
+            left_margin = int(arg)
+        elif opt in ("-l", "--right-margin"):
+            rirght_margin = int(arg)
+    pytv = PyTV(filename, left_margin, right_margin)
     gtk.main()
 
 
