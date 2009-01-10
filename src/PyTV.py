@@ -1,5 +1,15 @@
 #!/usr/bin/env python
+'''PyTV: Python Text Viewer
 
+Displays text.
+
+Usage: PyTv.py [options]
+
+Options:
+   -f ..., --filename=...      load specified filename
+   -l ..., --left-margin=...   set the left margin to the specified number of pixels
+   -r ..., --right-margin=...  set the right margin to the specified number of pixels
+'''
 import codecs
 import getopt
 import gtk
@@ -56,9 +66,11 @@ class PyTV(object):
     ##########################
     def destroy_event(self, widget):
         gtk.main_quit()
+
+###################################################
         
 def usage():
-    pass #print usage
+    print __doc__
 
 def main(argv):
     filename = None
